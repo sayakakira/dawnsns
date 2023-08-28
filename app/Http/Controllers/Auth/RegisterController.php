@@ -52,8 +52,17 @@ class RegisterController extends Controller
             'username' => 'required|string|max:255',
             'mail' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:4|confirmed',
-        ]);
-    }
+        ],
+    [
+        'username.required'=>'ユーザー名の入力は必須です'
+    ]);
+
+        if($validator->fail()){
+            return redirect("/input")
+            ->withErrors($validator)
+            ->withInput();
+        }
+}
 
     /**
      * Create a new user instance after a valid registration.
