@@ -6,10 +6,23 @@
 
 <p>DAWNSNSへようこそ</p>
 
-{{ Form::label('e-mail') }}
+{{ Form::label('e-mail','MailAdress') }}
 {{ Form::text('mail',null,['class' => 'input']) }}
-{{ Form::label('password') }}
+
+@if($errors->has('mail')))
+<div class="error">
+  <p>{{$errors->first('mail')}}</p>
+</div>
+@endif
+
+{{ Form::label('password','Password') }}
 {{ Form::password('password',['class' => 'input']) }}
+
+@if($errors->has('password'))
+<div class="error">
+  <p>{{$errors->first('password')}}</p>
+</div>
+@endif
 
 {{ Form::submit('ログイン') }}
 
