@@ -2,7 +2,7 @@
 
 @section('content')
 
-{!! Form::open(['url'=>'/register', 'method'=>'GET']) !!}
+{!! Form::open() !!}
 
 <h2>新規ユーザー登録</h2>
 
@@ -25,7 +25,7 @@
 @endif
 
 {{ Form::label('パスワード') }}
-{{ Form::text('password',null,['class' => 'input']) }}
+{{ Form::password('password',null,['class' => 'input']) }}
 
 @if($errors->has('password'))
 <div class="error">
@@ -34,7 +34,7 @@
 @endif
 
 {{ Form::label('パスワード確認') }}
-{{ Form::text('password-confirm',null,['class' => 'input']) }}
+{{ Form::password('password-confirm',null,['class' => 'input']) }}
 
 @if($errors->has('password-confirm'))
 <div class="error">

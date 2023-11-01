@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -51,12 +52,14 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'username' => 'required|string|max:255',
             'mail' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:4|confirmed',
+            'password' => 'required|string|min:4',
+            'password-confirm' => 'required|string|min:4|same:password',
         ])->validate();
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Create a new user i
+     * nstance after a valid registration.
      *
      * @param  array  $data
      * @return \App\User
@@ -80,12 +83,15 @@ class RegisterController extends Controller
             $data = $request->input();
             $this->validator($data);
             $this->create($data);
+            session()->put('user', $data['username']);
             return redirect('added');
         }
         return view('auth.register');
     }
 
-    public function added(){
-        return view('auth.added');
+    public function added()
+    {
+        $user = session('user');
+        return view('auth.added',['user'=>$user]);
     }
 }

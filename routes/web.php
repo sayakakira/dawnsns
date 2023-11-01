@@ -22,6 +22,7 @@
 //ログアウト中のページ
 Route::get('/login', 'Auth\LoginController@login');
 Route::post('/login', 'Auth\LoginController@login');
+Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::get('/register', 'Auth\RegisterController@register');
 Route::post('/register', 'Auth\RegisterController@register');
@@ -29,15 +30,18 @@ Route::post('/register', 'Auth\RegisterController@register');
 Route::get('/added', 'Auth\RegisterController@added');
 
 
-//ログイン中のページ
+//投稿関係
 Route::get('/top','PostsController@index');
+Route::post('/post/create','PostsController@create');
+Route::post('/post/update','PostsController@update');
+Route::get('/post/{id}/delete','PostsController@delete');
 
+// プロフィール
 Route::get('/profile','UsersController@profile');
 
+//
 Route::get('/search','UsersController@index');
 
+//フォロー
 Route::get('/follow-list','PostsController@index');
 Route::get('/follower-list','PostsController@index');
-
-
-

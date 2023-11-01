@@ -40,10 +40,18 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'mail' => 'required|string|email|max:255',
+            'password' => 'required|string|min:4',
+        ])->validate();
+    }
+
     public function login(Request $request){
         if($request->isMethod('post')){
-
             $data=$request->only('mail','password');
+            $this->validator($data);
             // ログインが成功したら、トップページへ
             //↓ログイン条件は公開時には消すこと
             if(Auth::attempt($data)){
@@ -53,21 +61,9 @@ class LoginController extends Controller
         return view("auth.login");
     }
 
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'mail'=>'required|email|min:4|max:12|unique:users',
-            'password'=>'required|a-z\d|min:4|max:12|confirmed'
-        ],
-    [
-        'mail.required'=>'メールアドレスの入力は必須です',
-        'password.required'=>'パスワードの入力は必須です'
-    ]);
+    public function logout(){
+        Auth::logout();
+        return redirect('/login');
+    }
 
-        if($validator->fail()){
-            return redirect("/login")
-            ->withErrors($validator)
-            ->withInput();
-        }
-}
 }

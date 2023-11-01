@@ -6,7 +6,7 @@
 
 <p>DAWNSNSへようこそ</p>
 
-{{ Form::label('e-mail','MailAdress') }}
+{{ Form::label('e-mail','MailAddress') }}
 {{ Form::text('mail',null,['class' => 'input']) }}
 
 @if($errors->has('mail')))
